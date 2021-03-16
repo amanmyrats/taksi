@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block profile %}
+
+<!-- Is yagdayy -->
+<div class="container ">
+    <div class="row justify-content-center bg-white"">
+        <div  style="display:inline-block">
+          <label>Işe çykjak.</label>
+          <label class="switch">
+              <input id='isde' name="work" type="radio" value="Işde">
+   
+              <span class="slider round"></span>
+          </label>
+          <label>Dynç aljak.</label>
+          <label class="switch">
+            <input id='dyncda'  id = "dyncda" name="work"  type="radio"  value="Dynçda">
+ 
+            <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+</div>
+
+<!-- Maglumatlary sazla -->
+<div class="container">
+    <div class="row justify-content-center">
+    <a href="{% url 'settings' %}" class="btn btn-lg btn-primary">Maglumatlary sazla</a>
+</div>
+</div>
+<!-- Profile preview -->
+<div class="container">
+    <div class="row justify-content-center">
+      <div class=" col-lg-4 col-sm-12 d-flex justify-content-center form-group">
+        <div class="card p-3">
+          <div class="d-flex align-items-center">
+            <div  class="row"> 
+              <img src="{{ request.user.taxiprofile.user_photo.url }}" class="img-thumbnail"> 
+              
+              <img src="{{ request.user.taxiprofile.car_photo.url }}" class="img-thumbnail">
+            </div>
+
+              <div class="">
+  
+              <div id="test" class="card-header m-0 p-1 text-center">{{ user.first_name }}</div>
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxicategory.name }}</li>
+                  <li class="list-group-item m-0 p-0 text-center">Asgabat - Sarahs</li>
+                  <li class="list-group-item m-0 p-0 text-center"  id="status">{{ user.taxistatus.status }}</li>
+                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxiprofile.mobile }}</li>
+              </ul>
+              <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-primary w-100 ml-2">Jaň Et</button> </div>
+          </div>
+      </div>
+  </div>
+  </div>
+  
+  </div>
+  </div>
+
+  {% block javascript %}
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/ajaxtest.js' %}"></script>
+  <!-- <script>
+    $(document).ready(function(){
+      console.log( "ready!" );
+      $("#test").click(function(){
+        console.log( "clicked" );
+      });
+    });
+    // $("#test").click(function () {
+    //   console.log( $(this).val() );
+    // });
+  </script>  -->
+  {% endblock %}
+{% endblock %}
