@@ -90,8 +90,8 @@ class SaherAra(models.Model):
     cities = list((x.id, x.name) for x in City.objects.all())
 
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    city1 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities)
-    # city2 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities)
+    city1 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nireden')
+    city2 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nira')
     # city1 = models.CharField(max_length=20, choices=cities)
     # city2 = models.CharField(max_length=20, choices=cities)
 
