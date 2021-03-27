@@ -90,6 +90,7 @@ class SaherAra(models.Model):
     cities = list((x.id, x.name) for x in City.objects.all())
 
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
     city1 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nireden')
     city2 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nira')
     # city1 = models.CharField(max_length=20, choices=cities)
@@ -101,7 +102,8 @@ class SaherAra(models.Model):
 class SaherIci(models.Model):
     cities = list((x.id, x.name) for x in City.objects.all())
 
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_saher')
+    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
     city = models.CharField(max_length=20, choices=cities)
 
     def __str__(self):
@@ -110,7 +112,8 @@ class SaherIci(models.Model):
 class EtrapObalary(models.Model):
     cities = list((x.id, x.name) for x in City.objects.all())
 
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_etrap')
+    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
     city = models.CharField(max_length=20, choices=cities)
     
     def __str__(self):
