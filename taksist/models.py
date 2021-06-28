@@ -51,7 +51,6 @@ class TaxiStatus(models.Model):
     def __str__(self):
         return self.status
 
-
 class TaxiProfile(models.Model):
 
     user_id=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, )
@@ -60,6 +59,8 @@ class TaxiProfile(models.Model):
     car_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png')
     user_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='user_photos/', blank=True, default='user_photo/default_taksist.png')
     mobile=models.CharField(max_length=13)
+    nireden = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nireden1')
+    nira = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nira1')
     objects = models.Manager()
 
     

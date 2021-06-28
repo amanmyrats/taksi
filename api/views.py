@@ -18,19 +18,19 @@ def taksi_detail_view(request, **kwargs):
 
 def saher_ara_view(request):
     if request.method=='GET':
-        taksistler = TaxiProfile.objects.filter(cat_id=2)
+        taksistler = TaxiProfile.objects.filter(cat_id=3)
         # sara = taksistler.taxiprofile_set.all()
-        serializer = TaxiSerializer(taksistler, many=True, context={'cat':2})
+        serializer = TaxiSerializer(taksistler, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 def saher_ici_view(request):
     if request.method=='GET':
-        taksistler = TaxiProfile.objects.filter(cat_id=3)
-        serializer = TaxiSerializer(taksistler, many=True, context={'cat':3})
+        taksistler = TaxiProfile.objects.filter(cat_id=1)
+        serializer = TaxiSerializer(taksistler, many=True)
         return JsonResponse(serializer.data, safe=False)
 
 def etrap_obalary_view(request):
     if request.method=='GET':
-        taksistler = TaxiProfile.objects.filter(cat_id=1)
-        serializer = TaxiSerializer(taksistler, many=True, context={'cat':1})
+        taksistler = TaxiProfile.objects.filter(cat_id=2)
+        serializer = TaxiSerializer(taksistler, many=True)
         return JsonResponse(serializer.data, safe=False)
