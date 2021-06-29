@@ -4,8 +4,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
-from .models import TaxiProfile , TaxiStatus, TaxiCategory
-from .forms import TaxiProfileModelForm ,TaxiCategoryModelForm, TaxiStatusModelForm, UserModelForm
+from .models import TaxiProfile, City, Category, Status #, TaxiStatus, TaxiCategory
+from .forms import TaxiProfileModelForm ,UserModelForm #TaxiCategoryModelForm, TaxiStatusModelForm, 
 
 def home_view(request):
     return render(request, 'home.html', {'msg':'Hello'})
@@ -21,6 +21,11 @@ def signup_view(request):
             form=UserCreationForm(request.POST)
             if form.is_valid():
                 form.save()
+
+                # Create an instance in TaxiProfile Model as well
+                new_taxi = TaxiProfile(user_id=User.objects.get(username=form.cleaned_data['username']))
+                new_taxi.save()
+
                 username=form.cleaned_data.get('username')
                 raw_password=form.cleaned_data.get('password1')
                 user=authenticate(username=username, password=raw_password)
@@ -67,12 +72,30 @@ def settings_view(request, *args, **kwargs):
         print('user is authenticated')
         if request.method=='POST':
             print('method is POST')
-            form_profile=TaxiProfileModelForm(request.POST, request.FILES)
-            form_category=TaxiCategoryModelForm(request.POST)
-            # form_status=TaxiStatusModelForm(request.POST)
-            form_user=UserModelForm(request.POST)
+
+            
+            copyPOST = request.POST.copy()
+            print('nireden kontrol',copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0)
+            # try:
+            nireden = City.objects.filter(pk=copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0).first()
+            nira = City.objects.filter(pk=copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0).first()
+            category = Category.objects.filter(pk=copyPOST.get('category') if not copyPOST.get('category')=='' else 0).first()
+            status = Status.objects.filter(pk=copyPOST.get('status') if not copyPOST.get('status')=='' else 0).first()
+            # copyPOST['nireden'] = nireden
+            # copyPOST['nira'] = nira
+            copyPOST.pop('nireden')
+            copyPOST.pop('nira')
+            copyPOST.pop('category')
+            copyPOST.pop('status')
+            print('found nireden nira:', type(nireden), type(nira))
+            # except:
+            #     print('no status or category or nireden or nira was selected')
+            form_profile=TaxiProfileModelForm(copyPOST, request.FILES)
+            form_user=UserModelForm(copyPOST)
+
             print('before checkin is_valid')
-            if form_profile.is_valid() and form_category.is_valid() and form_user.is_valid():
+            if form_profile.is_valid()  and form_user.is_valid(): # and form_category.is_valid()
+                print('they are valid')
                 user=request.user
               
                 print('before profile')
@@ -81,43 +104,32 @@ def settings_view(request, *args, **kwargs):
                     check_profile=TaxiProfile.objects.get(user_id=user.id)
                     # check_profile.user_id=user
                     print('photo none or not: ', form_profile.cleaned_data['user_photo'])
+
                     if form_profile.cleaned_data['user_photo']!='user_photo/default_taksist.png':
                         check_profile.user_photo=form_profile.cleaned_data['user_photo']
                     if form_profile.cleaned_data['car_photo']!='car_photo/default_car.png':
                         check_profile.car_photo=form_profile.cleaned_data['car_photo']
                     check_profile.mobile=form_profile.cleaned_data['mobile']
+                    print('before finding nireden nira')
+                    print('these will be assigned: ',nireden, nira)
+                    check_profile.nireden = nireden
+                    check_profile.nira = nira
+                    print('assigned nireden nira, and moving on to assign category and status')
+                    print('these will be assigned: ',category, status)
+                    check_profile.category = category
+                    print('category was assigned, and moving on to status')
+                    check_profile.status = status
+                    print('assigned nireden nira to check profile')
+
                     check_profile.save()
-                    print('saved profile')
+                    print('saved taxiprofile')
                 except:
+                    print('exception happened when updating taxiprofile model')
                     profile=form_profile.save(False)
                     profile.user_id=user
                     profile.save()
                     print('saved profile with exception')
       
-                # Here check TaxiCategory model, if exists update, if not create new taxe category
-                try:
-                    check_category=TaxiCategory.objects.get(user_id=user.id)
-                    # check_category.user_id=user
-                    check_category.name=form_category.cleaned_data['name']
-                    check_category.save()
-                    print('saved category')
-                except:
-                    category=form_category.save(False)
-                    category.user_id=user
-                    category.save()
-                    print('saved category with exception')
-                # Here check TaxiStatus model, if exists update, if not create new taxe status
-                # try:
-                #     check_status=TaxiStatus.objects.get(user_id=user.id)
-                #     # check_status.user_id=user
-                #     check_status.status=form_status.cleaned_data['status']
-                #     check_status.save()
-                    
-                # except:
-                #     status=form_status.save(False)
-                #     status.user_id=user
-                #     status.save()
-
                 # Here update the User model data
                 try:
                     current_user=User.objects.get(pk=request.user.id)
@@ -138,19 +150,25 @@ def settings_view(request, *args, **kwargs):
                 # return render(request, 'profile.html', context)
                 return redirect('profile')
             else:
+                print('form is not valied')
                 msg='Forms are not valid'
                 context={'msg':msg}
         else:
-            current_profile=TaxiProfile.objects.get(pk=request.user.id)
-            current_user=User.objects.get(pk=request.user.id)
-            current_category=TaxiCategory.objects.get(pk=request.user.id)
+            print('settings method is get')
+            try:
+                # If user is authenticated then he exists in User table
+                # This will not raise exception
+                current_user=User.objects.get(pk=request.user.id)
+                form_user=UserModelForm(instance=current_user)
 
-            form_profile=TaxiProfileModelForm(instance=current_profile)
-            form_category=TaxiCategoryModelForm(instance=current_category)
-            # form_status=TaxiStatusModelForm()
-            form_user=UserModelForm(instance=current_user)
+                current_profile=TaxiProfile.objects.get(pk=request.user.id)
+                form_profile=TaxiProfileModelForm(instance=current_profile)
+                
+            except:
+                form_user=UserModelForm()
+                form_profile=TaxiProfileModelForm()
 
-            context={'form_profile': form_profile, 'form_category': form_category , 'form_user': form_user  }
+            context={'form_profile': form_profile , 'form_user': form_user } #, 'form_category': form_category }
     else:
         return redirect('home')
     return render(request, 'settings.html', context)
@@ -172,10 +190,11 @@ def awtomenzil_view(request):
 
 
 def statuschange_view(request):
-    if request.is_ajax() and request.method=='GET':
-        print("inside statuschange_view")
-        new_status=request.GET.get('status', None)
-        user_status=TaxiStatus.objects.get(pk=request.user.id)
-        user_status.status=new_status
-        user_status.save()
-        return JsonResponse({"new_status":new_status}, status = 200)
+    pass
+    # if request.is_ajax() and request.method=='GET':
+    #     print("inside statuschange_view")
+    #     new_status=request.GET.get('status', None)
+    #     user_status=TaxiStatus.objects.get(pk=request.user.id)
+    #     user_status.status=new_status
+    #     user_status.save()
+    #     return JsonResponse({"new_status":new_status}, status = 200)
