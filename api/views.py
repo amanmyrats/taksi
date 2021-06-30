@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from rest_framework import filters, generics
+
 
 from .serializers import TaxiSerializer
 from taksist.models import TaxiProfile, Category, Status
@@ -32,8 +34,15 @@ def saher_ici_view(request):
         return JsonResponse(serializer.data, safe=False)
 
 def etrap_obalary_view(request):
+
     if request.method=='GET':
         category = Category.objects.get(id=1)
         taksistler = TaxiProfile.objects.filter(category=category)
         serializer = TaxiSerializer(taksistler, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+class TaxiListView(generics.ListAPIView):
+    queryset = TaxiProfile.objects.all()
+    serializer_class = TaxiSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['mobile', 'nireden__name']

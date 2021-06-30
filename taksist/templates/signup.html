@@ -100,8 +100,15 @@
 				 			<input class="btn login_btn" type="submit" value="Agza Bol">
 				   		</div>
 					</form>
+					
 				</div>
-		
+				<div>
+					{% if errors %}
+						Here are errors:
+						{{ errors.password2 }}
+						{{ errors.username}}
+					{% endif %}
+				</div>
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						Öň agza bolupdyňmy?  Onda Sistema<a href="{% url 'login' %}" class="ml-2">Gir</a>
