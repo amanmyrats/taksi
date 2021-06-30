@@ -54,25 +54,18 @@ class TaxiStatus(models.Model):
 class TaxiProfile(models.Model):
     category_choice = [(x.id, x.name) for x in Category.objects.all()]
     status_choice = [(x.id, x.name) for x in Status.objects.all()]
-
     city_choice1 = [(x.id, x.name) for x in City.objects.filter(id__gt=2)]
     city_choice2 = [(x.id, x.name) for x in City.objects.all()]
 
     user_id=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True )
-    # cat_id =  models.ForeignKey(Category, on_delete = models.SET_NULL, null = True)
-    # status_id = models.ForeignKey(Status, on_delete = models.SET_NULL, null = True)
-
+    mobile=models.CharField(max_length=13)
     category = models.ForeignKey(Category, on_delete = models.SET_NULL, null = True, choices=category_choice, blank=True)
     status = models.ForeignKey(Status, on_delete = models.SET_NULL, null = True, choices=status_choice, blank=True)
-
-    car_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png')
-    user_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='user_photos/', blank=True, default='user_photo/default_taksist.png')
-    mobile=models.CharField(max_length=13)
     nireden = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nireden1', choices=city_choice1, blank=True)
     nira = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nira1', choices=city_choice2, blank=True)
-
-    # nireden = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nireden1', choices=city_choice)
-    # nira = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nira1', choices=city_choice)
+    
+    car_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png')
+    user_photo=ResizedImageField(size=[100, 100], quality=75,upload_to='user_photos/', blank=True, default='user_photo/default_taksist.png')
 
     objects = models.Manager()
 

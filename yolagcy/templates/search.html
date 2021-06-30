@@ -2,6 +2,10 @@
 {% block search %}
 <div class="container">
   <div class="row">
+    {% for fl in filters %}
+      fl.mobile
+      fl.category
+    {% endfor %}
     {% for taxi in taxi_drivers %}
     <div class=" col-lg-4 col-sm-12 d-flex justify-content-center form-group">
       <div class="card p-3">
@@ -12,8 +16,8 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item m-0 p-0 text-center">{{ taxi.mobile }}</li>
                 <li class="list-group-item m-0 p-0 text-center">{{ taxi.nireden }} - {{ taxi.nira }}</li>
-                <li class="list-group-item m-0 p-0 text-center">{{ taxi.cat_id }}</li>
-                <li class="list-group-item m-0 p-0 text-center">{{ taxi.status_id }}</li>
+                <li class="list-group-item m-0 p-0 text-center">{{ taxi.category }}</li>
+                <li class="list-group-item m-0 p-0 text-center">{{ taxi.status }}</li>
             </ul>
             <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-primary w-100 ml-2">Jaň Et</button> </div>
         </div>

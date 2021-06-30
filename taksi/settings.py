@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'yolagcy',
     'smartfields',
     'crispy_forms',
-    'rest_framework'
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

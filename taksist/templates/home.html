@@ -6,34 +6,37 @@
    <div class="container mb-5">
       <div class="row justify-content-center ">
          <div class=" col-lg-3 col-sm-12 d-flex justify-content-center form-group">
-            <a href="{% url 'search' %}saherara" class="btn btn-lg btn-primary p-4" style="width: 100%;">Şäher ara</a>
-          </div>
-          <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
-            <a href="{% url 'search' %}saherici" class="btn btn-lg btn-primary p-4" style="width: 100%;">Şäher içi</a>
-          </div>
-          <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
-            <a href="{% url 'search' %}etrapobalary" class="btn btn-lg btn-primary p-4"  style="width: 100%;">Etrap obalary</a>
-          </div>
-                  
+            <a href="{% url 'search' %}" class="btn btn-lg btn-primary p-4" style="width: 100%;">Hemmesi</a>
          </div>
       </div>
-      <div class="container mt-4">
-         <div class="row justify-content-center ">
-            <div class=" col-lg-3 col-sm-12 d-flex justify-content-center">
-               <h3 class="text-info font-weight-bold">Taksistmi?</h3>
-             </div>
+      <div class="row justify-content-center ">
+         <div class=" col-lg-3 col-sm-12 d-flex justify-content-center form-group">
+            <a href="{% url 'search' %}saherara" class="btn btn-lg btn-primary p-4" style="width: 100%;">Şäher ara</a>
          </div>
-         <div class="row justify-content-center ">
+         <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
+            <a href="{% url 'search' %}saherici" class="btn btn-lg btn-primary p-4" style="width: 100%;">Şäher içi</a>
+         </div>
+         <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
+            <a href="{% url 'search' %}etrapobalary" class="btn btn-lg btn-primary p-4"  style="width: 100%;">Etrap obalary</a>
+         </div>
+      </div>
+   </div>
 
-             <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
-               <a href="{% url 'login' %}" class="btn btn-lg btn-secondary p-4" style="width: 100%;">Sistema Gir</a>
-             </div>
-             <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
-               <a href="{% url 'signup' %}" class="btn btn-lg btn-secondary p-4"  style="width: 100%;">Agza Bol</a>
-             </div>
-                     
-            </div>
+   <div class="container mt-4">
+      <div class="row justify-content-center ">
+         <div class=" col-lg-3 col-sm-12 d-flex justify-content-center">
+            <h3 class="text-info font-weight-bold">Taksistmi?</h3>
          </div>
+      </div>
+      <div class="row justify-content-center ">
+         <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
+         <a href="{% url 'login' %}" class="btn btn-lg btn-secondary p-4" style="width: 100%;">Sistema Gir</a>
+         </div>
+         <div class="col-lg-3 col-sm-12 d-flex justify-content-center form-group">
+         <a href="{% url 'signup' %}" class="btn btn-lg btn-secondary p-4"  style="width: 100%;">Agza Bol</a>
+         </div>       
+      </div>
+   </div>
    
     <div class="container-fluid">
        <div class="row">

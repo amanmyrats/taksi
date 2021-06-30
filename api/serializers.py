@@ -4,14 +4,14 @@ from taksist.models import TaxiProfile, User, TaxiStatus, Category, Status, Sahe
 
 class TaxiSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_taksist_name')
-    # cat_id = serializers.StringRelatedField()
-    # status_id = serializers.StringRelatedField()
+    category = serializers.StringRelatedField()
+    status = serializers.StringRelatedField()
     nireden = serializers.StringRelatedField()
     nira = serializers.StringRelatedField()
 
     class Meta:
         model = TaxiProfile
-        fields = ['user_id', 'mobile', 'username', 'nireden', 'nira']
+        fields = ['user_id', 'mobile', 'username', 'nireden', 'nira', 'category', 'status']
 
     
     def get_taksist_name(self, taksist):
