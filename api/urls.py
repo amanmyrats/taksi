@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import saher_ara_view, saher_ici_view, etrap_obalary_view, all_taksi_view, taksi_detail_view, TaxiListView
+from .views import saher_ara_view, saher_ici_view, etrap_obalary_view, all_taksi_view, taksi_detail_view, TaxiListAPIView
 
 urlpatterns = [
     path('api/taksiler/', all_taksi_view),
@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/saherara/', saher_ara_view),
     path('api/saherici/', saher_ici_view),
     path('api/etrapobalary/', etrap_obalary_view),
-    path('api/test/', TaxiListView.as_view()),
+    path('api/test/', TaxiListAPIView.as_view()),
     ]

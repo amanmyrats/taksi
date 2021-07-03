@@ -1047,13 +1047,13 @@ nav.main-menu {
 	border-bottom: solid #eee 1px;
 }
 
-.main-menu ul>li .sub-down li a::before {}
+/* .main-menu ul>li .sub-down li a::before {} */
 
 .main-menu ul>li .sub-down li a:hover {
 	color: #111111;
 }
 
-.main-menu ul>li .sub-down li a:hover::before {}
+/* .main-menu ul>li .sub-down li a:hover::before {} */
 
 .main-menu ul li:first-child {
 	margin-left: 0;
@@ -1131,7 +1131,7 @@ nav.main-menu {
 	padding: 15px 0px;
 }
 
-.sub-full {}
+/* .sub-full {} */
 
 .simple-down {
 	padding: 15px;
@@ -2271,20 +2271,3 @@ ul.social_links li a:focus {
 	color: #f36b2a;
 	text-decoration: underline;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

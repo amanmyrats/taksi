@@ -41,8 +41,10 @@ def etrap_obalary_view(request):
         serializer = TaxiSerializer(taksistler, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-class TaxiListView(generics.ListAPIView):
+class TaxiListAPIView(generics.ListAPIView):
+    # def __init__(self, *args, **kwargs):
+    #     self.searchbox = kwargs.get('searchbox')
     queryset = TaxiProfile.objects.all()
     serializer_class = TaxiSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['mobile', 'nireden__name']
+    search_fields = ['user_id__first_name', 'mobile', 'nireden__name', 'nira__name']

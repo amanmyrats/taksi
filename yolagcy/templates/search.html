@@ -1,18 +1,31 @@
   {% extends 'base.html' %}
 {% block search %}
 <div class="container">
+<div class="row justify-content-center padding">
+  <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+      <form type="GET" action="" class="domain-form">
+          <div class="form-group d-md-flex"> 
+            <input id="search" name='search' type="text" class="form-control px-4" placeholder="Enter your domain name..."> 
+            <input type="submit" class="search-domain btn btn-primary px-5" value="Search Domain"> 
+          </div>
+      </form>
+  </div>
+</div>
+</div>
+
+<div class="container">
   <div class="row">
-    {% for fl in filters %}
+    <!-- {% for fl in filters %}
       fl.mobile
       fl.category
     {% endfor %}
-    {% for taxi in taxi_drivers %}
+    {% for taxi in taxi_drivers %} -->
     <div class=" col-lg-4 col-sm-12 d-flex justify-content-center form-group">
       <div class="card p-3">
         <div class="d-flex align-items-center">
           <div class="image"> <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="155"> </div>
             <div class="">
-            <div class="card-header m-0 p-1 text-center">{{ taxi.username }}</div>
+            <div class="card-header m-0 p-1 text-center">{{ taxi.first_name }} {{ taxi.last_name }}</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item m-0 p-0 text-center">{{ taxi.mobile }}</li>
                 <li class="list-group-item m-0 p-0 text-center">{{ taxi.nireden }} - {{ taxi.nira }}</li>
