@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'taksist',
     'yolagcy',
-    'smartfields',
-    'crispy_forms',
     'rest_framework',
     'django_filters',
 ]

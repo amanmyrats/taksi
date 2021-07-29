@@ -6,50 +6,53 @@ from .utils import user_photo_upload_path, car_photo_upload_path
 
 
 class City(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
 
 class Category(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 20)
 
     def __str__(self):
         return self.name
 
 class Status(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 30)
 
     def __str__(self):
         return self.name
 
-class TaxiCategory(models.Model):
-    taxi_category=[
-    ('Şäher Arasy', 'Şäher ara gatnaýaryn.'),
-    ('Şäher Içi', 'Diňe şäher içinde işleýärin.'),
-    ('Etrap Obalary', 'Etrabyň obalaryna gatnaýaryn.')]
+# class TaxiCategory(models.Model):
+#     taxi_category=[
+#     ('Şäher Arasy', 'Şäher ara gatnaýaryn.'),
+#     ('Şäher Içi', 'Diňe şäher içinde işleýärin.'),
+#     ('Etrap Obalary', 'Etrabyň obalaryna gatnaýaryn.')]
  
-    user_id=models.OneToOneField(User, on_delete=models.CASCADE, related_name='name')
-    name=models.CharField(max_length=255, choices=taxi_category)
-    objects = models.Manager()
+#     user_id=models.OneToOneField(User, on_delete=models.CASCADE, related_name='name')
+#     name=models.CharField(max_length=255, choices=taxi_category)
+#     objects = models.Manager()
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
-class TaxiStatus(models.Model):
+# class TaxiStatus(models.Model):
 
-    taxi_status=[
-        ('Işde', 'Işe çykdym, işläp ýörün.'),
-        ('Dynçda', 'Şu wagt işlämok, dynç alýaryn.')
-    ]
+#     taxi_status=[
+#         ('Işde', 'Işe çykdym, işläp ýörün.'),
+#         ('Dynçda', 'Şu wagt işlämok, dynç alýaryn.')
+#     ]
 
-    user_id=models.OneToOneField(User, on_delete=models.CASCADE)
-    status=models.CharField(max_length=50, choices=taxi_status)
-    objects = models.Manager()
+#     user_id=models.OneToOneField(User, on_delete=models.CASCADE)
+#     status=models.CharField(max_length=50, choices=taxi_status)
+#     objects = models.Manager()
 
-    def __str__(self):
-        return self.status
+#     def __str__(self):
+#         return self.status
 
 class TaxiProfile(models.Model):
     category_choice = [(x.id, x.name) for x in Category.objects.all()]
@@ -94,35 +97,35 @@ class TaxiProfile(models.Model):
     #         car_photo.thumbnail(photo_size)
     #         car_photo.save(self.car_photo.path)
 
-class SaherAra(models.Model):
-    cities = list((x.id, x.name) for x in City.objects.all())
+# class SaherAra(models.Model):
+#     cities = list((x.id, x.name) for x in City.objects.all())
 
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
-    city1 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nireden')
-    city2 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nira')
-    # city1 = models.CharField(max_length=20, choices=cities)
-    # city2 = models.CharField(max_length=20, choices=cities)
+#     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+#     taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
+#     city1 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nireden')
+#     city2 = models.ForeignKey(City, on_delete=models.CASCADE, choices=cities, related_name='nira')
+#     # city1 = models.CharField(max_length=20, choices=cities)
+#     # city2 = models.CharField(max_length=20, choices=cities)
 
-    def __str__(self):
-        return '{} - {}'.format(self.city1, self.city2)
+#     def __str__(self):
+#         return '{} - {}'.format(self.city1, self.city2)
 
-class SaherIci(models.Model):
-    cities = list((x.id, x.name) for x in City.objects.all())
+# class SaherIci(models.Model):
+#     cities = list((x.id, x.name) for x in City.objects.all())
 
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_saher')
-    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
-    city = models.CharField(max_length=20, choices=cities)
+#     user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_saher')
+#     taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
+#     city = models.CharField(max_length=20, choices=cities)
 
-    def __str__(self):
-        return '{} - {}'.format(self.city, 'Saher ici')
+#     def __str__(self):
+#         return '{} - {}'.format(self.city, 'Saher ici')
 
-class EtrapObalary(models.Model):
-    cities = list((x.id, x.name) for x in City.objects.all())
+# class EtrapObalary(models.Model):
+#     cities = list((x.id, x.name) for x in City.objects.all())
 
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_etrap')
-    taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
-    city = models.CharField(max_length=20, choices=cities)
+#     user_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='haysy_etrap')
+#     taxi_id = models.OneToOneField(TaxiProfile, on_delete=models.CASCADE)
+#     city = models.CharField(max_length=20, choices=cities)
     
-    def __str__(self):
-        return '{} - {}'.format(self.city, 'Etrap Obalary')
+#     def __str__(self):
+#         return '{} - {}'.format(self.city, 'Etrap Obalary')
