@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 import requests
+import time
 
 from .filters import TaxiFilter
 from api.views import TaxiListAPIView
@@ -18,7 +19,10 @@ def search_view(request, **kwargs):
         # # print(data.json())
         # print('doing saherara ici in search view')
         print('searching nira:',kwargs.get('nira'))
+        # time.sleep(1)
+        # print("waited 1 second")
         if search is not None:
+            
             data = requests.get('http://127.0.0.1:8000/api/test/', params=request.GET)
             return render(request, 'search.html', {'taxi_drivers':data.json()})
         else:
