@@ -102,25 +102,36 @@ if DEBUG:
         }
     }
 else:
-    if 'RDS_DB_NAME' in os.environ:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                'NAME': os.environ['RDS_DB_NAME'],
-                'USER': os.environ['RDS_USERNAME'],
-                'PASSWORD': os.environ['RDS_PASSWORD'],
-                'HOST': os.environ['RDS_HOSTNAME'],
-                'PORT': os.environ['RDS_PORT'],
-                }
-            }
-    else:
-        print('rds_db_name not in os.environment, I am in sqlite')
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': str(os.path.join(BASE_DIR / 'db.sqlite3')) ,
-            }
+    # if 'RDS_DB_NAME' in os.environ:
+        # DATABASES = {
+        #     'default': {
+        #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #         'NAME': os.environ['RDS_DB_NAME'],
+        #         'USER': os.environ['RDS_USERNAME'],
+        #         'PASSWORD': os.environ['RDS_PASSWORD'],
+        #         'HOST': os.environ['RDS_HOSTNAME'],
+        #         'PORT': os.environ['RDS_PORT'],
+        #         }
+        #     }
+    print("I am using postgresql")
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbaq64ulk12uni',
+        'USER': 'vbwebzefrldkpp',
+        'PASSWORD': '8b78c51193e21093d2ca9d978b36717061769639f1c06dfde7a1a217b8f0578b',
+        'HOST': 'ec2-3-213-146-52.compute-1.amazonaws.com',
+        'PORT': '5432',
         }
+    }
+    # else:
+    #     print('rds_db_name not in os.environment, I am in sqlite')
+    #     DATABASES = {
+    #         'default': {
+    #             'ENGINE': 'django.db.backends.sqlite3',
+    #             'NAME': str(os.path.join(BASE_DIR / 'db.sqlite3')) ,
+    #         }
+    #     }
 
 # DATABASES = {
 #     'default': {

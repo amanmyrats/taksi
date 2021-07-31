@@ -74,28 +74,28 @@ class TaxiProfile(models.Model):
 
     
 
-    def get_status(self):
-        try:
-            xstatus=TaxiStatus.objects.get(user_id=self.user_id)
-            return xstatus.status
-        except:
-            return "tapylmady"
+    # def get_status(self):
+    #     try:
+    #         xstatus=TaxiStatus.objects.get(user_id=self.user_id)
+    #         return xstatus.status
+    #     except:
+    #         return "tapylmady"
         
-    def get_category(self):
-        try:
-            xcategory = TaxiCategory.objects.get(user_id=self.user_id)
-            return xcategory.name
-        except:
-            return "No Category"
+    # def get_category(self):
+    #     try:
+    #         xcategory = TaxiCategory.objects.get(user_id=self.user_id)
+    #         return xcategory.name
+    #     except:
+    #         return "No Category"
 
 
-    # def save(self, *args, **kwargs):
-    #     super(TaxiProfile, self).save(*args, **kwargs)
-    #     car_photo=Image.open(self.car_photo.path)
-    #     if car_photo.height>100 or car_photo.weight>100:
-    #         photo_size=(100, 100)
-    #         car_photo.thumbnail(photo_size)
-    #         car_photo.save(self.car_photo.path)
+    def save(self, *args, **kwargs):
+        super(TaxiProfile, self).save(*args, **kwargs)
+        car_photo=Image.open(self.car_photo.path)
+        if car_photo.height>100 or car_photo.weight>100:
+            photo_size=(100, 100)
+            car_photo.thumbnail(photo_size)
+            car_photo.save(self.car_photo.path)
 
 # class SaherAra(models.Model):
 #     cities = list((x.id, x.name) for x in City.objects.all())
