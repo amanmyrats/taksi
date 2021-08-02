@@ -55,10 +55,10 @@ class Status(models.Model):
 #         return self.status
 
 class TaxiProfile(models.Model):
-    category_choice = ['1','2'] #[(x.id, x.name) for x in Category.objects.all()]
-    status_choice = ['1','2'] #[(x.id, x.name) for x in Status.objects.all()]
-    city_choice1 = ['ag','mr'] #[(x.id, x.name) for x in City.objects.filter(id__gt=2)]
-    city_choice2 = ['ag','mr'] #[(x.id, x.name) for x in City.objects.all()]
+    category_choice = [('1','2')] #[(x.id, x.name) for x in Category.objects.all()]
+    status_choice = [('1','2')] #[(x.id, x.name) for x in Status.objects.all()]
+    city_choice1 = [('ag','mr')] #[(x.id, x.name) for x in City.objects.filter(id__gt=2)]
+    city_choice2 = [('ag','mr')] #[(x.id, x.name) for x in City.objects.all()]
 
     user_id=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True )
     mobile=models.CharField(max_length=13)
