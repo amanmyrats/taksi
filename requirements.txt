@@ -53,7 +53,6 @@ Pillow==8.1.0
 progressbar==2.5
 psutil==5.7.3
 psycopg2==2.8.6
-py2exe==0.10.1.0
 pycodestyle==2.6.0
 pycparser==2.20
 PyJWT==1.7.1
