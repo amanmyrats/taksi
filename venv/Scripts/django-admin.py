@@ -1,4 +1,4 @@
-#!d:\coding\taksi\venv\scripts\python.exe
+#!F:\coding\taksi heroku\venv\Scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 
