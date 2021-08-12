@@ -43,7 +43,17 @@ INSTALLED_APPS = [
     'yolagcy',
     'rest_framework',
     'django_filters',
+    'storages',
 ]
+
+AWS_STORAGE_BUCKET_NAME = 'elasticbeanstalk-us-west-2-865036748267'
+AWS_S3_REGION_NAME = 'us-west-2'  # e.g. us-east-2
+AWS_ACCESS_KEY_ID = 'AKIA4S2BVIXV43WWVZG4'
+AWS_SECRET_ACCESS_KEY = 'bwYi9hVFENnJ58u7Q6qpNhj3ScoRn4Ki8HSpO6vb'
+AWS_DEFAULT_ACL =None
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

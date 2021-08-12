@@ -18,8 +18,10 @@ def signup_view(request):
         return render(request, 'home.html', context)
     else:
         if request.method=='POST':
+            print('in post')
             form=UserCreationForm(request.POST)
             if form.is_valid():
+                print('in VALID')
                 form.save()
 
                 # Create an instance in TaxiProfile Model as well
