@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'm9rptl71nvf672_i2t=5flwmwd02t*1#7rpl2k%2z!c=))h1@y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -51,6 +51,7 @@ AWS_S3_REGION_NAME = 'us-west-2'  # e.g. us-east-2
 AWS_ACCESS_KEY_ID = 'AKIA4S2BVIXV43WWVZG4'
 AWS_SECRET_ACCESS_KEY = 'bwYi9hVFENnJ58u7Q6qpNhj3ScoRn4Ki8HSpO6vb'
 AWS_DEFAULT_ACL =None
+AWS_QUERYSTRING_AUTH = False
 
 MEDIAFILES_LOCATION = 'media'
 DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'

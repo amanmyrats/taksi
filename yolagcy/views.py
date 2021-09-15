@@ -5,10 +5,12 @@ import time
 
 from .filters import TaxiFilter
 from api.views import TaxiListAPIView
+from taksist.models import TaxiProfile
 
 def search_view(request, **kwargs):
     print('inside search view')
     search = request.GET.get('search')
+    print('this is search', search)
     
 
     if request.method == 'GET':
@@ -18,12 +20,18 @@ def search_view(request, **kwargs):
         # print(data)
         # # print(data.json())
         # print('doing saherara ici in search view')
-        print('searching nira:',kwargs.get('nira'))
+        
         # time.sleep(1)
         # print("waited 1 second")
         if search is not None:
             
-            data = requests.get('http://127.0.0.1:8000/api/test/', params=request.GET)
+            # to make search better, i must send category parameter to TaxiAPIListView
+            category = kwargs.get('nira')
+            print('searching category:',kwargs.get('nira'))
+            if category is None:
+                data = requests.get('http://127.0.0.1:8000/api/test/', params=request.GET)
+            else:
+                data = requests.get('http://127.0.0.1:8000/api/test/', params=request.GET, category = category)
             return render(request, 'search.html', {'taxi_drivers':data.json()})
         else:
             # return render(request, 'search.html', {'taxi_drivers':data.json()})
@@ -46,6 +54,8 @@ def search_view(request, **kwargs):
 
     # taxi_drivers=User.objects.all()
     print('returning render in search view')
+    testtaxi = TaxiProfile.objects.all()
+    return render(request, 'search.html', {'taxi_drivers':testtaxi})
     return render(request, 'search.html', {'taxi_drivers':data.json()})
 
 def taxi_search_view(request):

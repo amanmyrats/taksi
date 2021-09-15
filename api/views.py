@@ -43,8 +43,41 @@ def etrap_obalary_view(request):
 
 class TaxiListAPIView(generics.ListAPIView):
     # def __init__(self, *args, **kwargs):
-    #     self.searchbox = kwargs.get('searchbox')
-    queryset = TaxiProfile.objects.all()
+    #     # self.searchbox = kwargs.get('category')
+    #     self.category = kwargs.get
+    #     if self.category == 'saherici':
+    #         self.category = Category.objects.get(id = 1)
+
+    #     elif self.category == 'etrapobalary':
+    #         self.category = Category.objects.get(id = 2)
+    #     elif self.category == 'saherara':
+    #         self.category = Category.objects.get(id = 3)
+        
+    #     if self.category is None:
+    #         queryset = TaxiProfile.objects.filter(category=self.category)
+    #     else:
+    #         queryset = TaxiProfile.objects.all()
+    #     super().__init__( queryset=queryset)
+    
     serializer_class = TaxiSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['user_id__first_name', 'mobile', 'nireden__name', 'nira__name']
+
+    def get_queryset(self):
+        nira = self.kwargs.get('nira')
+        category = None
+        if nira == 'saherici':
+            category = Category.objects.get(id = 1)
+        elif nira == 'etrapobalary':
+            category = Category.objects.get(id = 2)
+        elif nira == 'saherara':
+            category = Category.objects.get(id = 3)
+
+        if category is not None:
+            
+            print('category is', nira)
+            print('category name is', category.name)
+            return TaxiProfile.objects.filter(category=self.category)
+        else:
+            print('category is none')
+            return TaxiProfile.objects.all()
