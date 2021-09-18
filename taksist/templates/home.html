@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block home %}
+<!-- Showcase -->
+<section class="bg-dark text-light p-5 text-center text-sm-start " style="margin-top: 100px;">
+   <div class="container">
+      <div class="d-sm-flex align-items-center justify-content-between ">
+         <div>
+            {% if not request.user.is_authenticated %}
+            <span class="text-warning">Taksi </span>gerekmi?
+         
+            <p class="lead mt-3 mb-1">
+               Siz bu ýerde Türkmenistanyň ähli taksistlerini tapyp bilersiňiz.
+               Taksistler 3 kategoriýa aýrylan. Ol kategoriýalar: Şäher arasy, 
+               Şäher içi, Etrap obalary.
+            </p>
+            <a href="{% url 'search' %}" class="btn btn-lg btn-primary p-2" >Taksistleri Gözläň!</a>
+            
+            <p class="lead mt-3  mb-1">
+               Eger-de siz taksist bolsaňyz, onda agza bolup bilersiňiz!
+            </p>
+            <a href="{% url 'login' %}" class="btn btn-lg btn-primary p-2" >Sistema Giriň!</a>
+            <a href="{% url 'signup' %}" class="btn btn-lg btn-primary p-2" >Agza boluň!</a>
+            {% else %}
+            <div class="row align-items-center justify-content-center">
+               Müşderiler sizi idände, siz olara şeylerak görünýärsiňiz.
+               <a href="{% url 'profile' %}" class="btn btn-lg btn-primary p-2" >Meniň daşyndan görünişim</a>
+            </div>
+            <div class="row align-items-center justify-content-center mt-4">
+               Eger maglumatlaryňy üýtgetjek bolsaňyz şul ýere basyň.
+            <a href="{% url 'settings' %}" class="btn btn-lg btn-primary p-2" >Maglumatlarymy sazla</a>
+            </div>
+            
+            {% endif %}
+         </div>
+         <img class="img-fluid w-50 d-none d-lg-block" src="{% static 'images/taxi.png' %}" alt="Taxi">
+         
+      </div>
+   </div>
+</section>
+
+ 
+
+{% endblock %}

@@ -1,0 +1,2 @@
+arn:aws:s3:::elasticbeanstalk-us-west-2-865036748267/
+865036748267

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+  {% load static %}
+  
+{% block search %}
+
+<!-- Search -->
+<section style="padding-top: 100px;">
+  <div class="container">
+    <div class="row justify-content-center padding">
+      <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+          <form type="GET" action="" class="domain-form">
+              <div class="form-group d-md-flex">
+
+                <input type="text" name="category" id="categoryinput" value="{{category}}" style="visibility: hidden; width: 1px;">
+                
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                  <option selected>
+                    {% if category == "saherara" %} 
+                      Şäher Ara
+                    {% elif category == "saherici" %} 
+                      Şäher Içi
+                    {% elif category == "etrapobalary" %}
+                      Etrap Obalary
+                    {% else %}
+                      Hemmesi
+                    {% endif %}
+                  </option>
+                  <option value="hemmesi">Hemmesi</option>
+                  <option value="saherici">Şäher Içi</option>
+                  <option value="etrapobalary">Etrap Obalary</option>
+                  <option value="saherara">Şäher Ara</option>
+                </select>
+
+                <input id="search" name='search' type="text" class="form-control px-4" placeholder="Gözlemeli taksistiň ýada şäheriň adyny ýazyň..."> 
+                <input type="submit" class="search-domain btn btn-primary px-5" value="Gözle"> 
+              </div>
+          </form>
+      </div>
+    </div>
+    </div>
+</section>
+
+   <!-- Taxi Cards -->
+   <section >
+    <div class="container">
+       <div class="row justify-content-center text-center">
+        {% for taxi in taxi_drivers %}
+        <div class="col-lg-4 col-sm-12 mt-5">
+          
+             <div class="card" style="width: 18rem;">
+              <img src="{{ taxi.car_photo_url }}" class="card-img-top" style="max-height: 150px;" alt="Driver's photo">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ taxi.first_name }} {{ taxi.last_name }}</li>
+                <li class="list-group-item">{{ taxi.nireden }} - {{ taxi.nira }}</li>
+                <li class="list-group-item">{{ taxi.mobile }}</li>
+              </ul>
+            </div>
+
+        </div>
+        {% endfor %}
+          
+
+       </div>
+    </div>
+ </section>
+
+<script>
+  $('select').on('change', function(){
+    console.log('inside jquery')
+    $('#categoryinput').attr('value', this.value)
+  });
+</script>          
+
+
+  {% endblock %}
