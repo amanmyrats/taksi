@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt # import
 
 from .models import TaxiProfile, City, Category, Status #, TaxiStatus, TaxiCategory
 from .forms import TaxiProfileModelForm ,UserModelForm #TaxiCategoryModelForm, TaxiStatusModelForm, 
@@ -72,6 +73,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+@csrf_exempt
 def settings_view(request, *args, **kwargs):
     print('settings started working')
     if request.user.is_authenticated:
@@ -81,6 +83,7 @@ def settings_view(request, *args, **kwargs):
      
             copyPOST = request.POST.copy()
             print('nireden kontrol',copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0)
+            print('nira kontrol',copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0)
             # try:
             nireden = City.objects.filter(pk=copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0).first()
             nira = City.objects.filter(pk=copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0).first()
@@ -111,6 +114,7 @@ def settings_view(request, *args, **kwargs):
                     print('photo none or not: ', form_profile.cleaned_data['user_photo'])
 
                     if form_profile.cleaned_data['user_photo']!='user_photo/default_taksist.png':
+                        print('inside form_profile comparing with default taxi')
                         check_profile.user_photo=form_profile.cleaned_data['user_photo']
                     if form_profile.cleaned_data['car_photo']!='car_photo/default_car.png':
                         check_profile.car_photo=form_profile.cleaned_data['car_photo']

@@ -1,83 +1,191 @@
 {% extends "base.html" %}
 {% load static %}
+
+{% block head_extra %}
+<style>
+  body{
+    background-color: #dee9ff;
+}
+
+.registration-form{
+	padding: 50px 0;
+}
+
+.registration-form form{
+    background-color: #fff;
+    max-width: 600px;
+    margin: auto;
+    padding: 50px 70px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
+}
+
+.registration-form .form-icon{
+	text-align: center;
+    /* background-color: #5891ff; */
+    border-radius: 50%;
+    font-size: 40px;
+    color: white;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    margin-bottom: 50px;
+    line-height: 100px;
+}
+
+.registration-form .item{
+	border-radius: 20px;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+}
+
+.registration-form .create-account{
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #5791ff;
+    border: none;
+    color: white;
+    margin-top: 20px;
+}
+
+.registration-form .social-media{
+    max-width: 600px;
+    background-color: #fff;
+    margin: auto;
+    padding: 35px 0;
+    text-align: center;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #9fadca;
+    border-top: 1px solid #dee9ff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
+}
+
+.registration-form .social-icons{
+    margin-top: 30px;
+    margin-bottom: 16px;
+}
+
+.registration-form .social-icons a{
+    font-size: 23px;
+    margin: 0 3px;
+    color: #5691ff;
+    border: 1px solid;
+    border-radius: 50%;
+    width: 45px;
+    display: inline-block;
+    height: 45px;
+    text-align: center;
+    background-color: #fff;
+    line-height: 45px;
+}
+
+.registration-form .social-icons a:hover{
+    text-decoration: none;
+    opacity: 0.6;
+}
+
+@media (max-width: 576px) {
+    .registration-form form{
+        padding: 50px 20px;
+    }
+
+    .registration-form .form-icon{
+        width: 100px;
+        height: 100px;
+        font-size: 30px;
+        line-height: 70px;
+    }
+}
+</style>
+
+{% endblock %}
+
 {% block settings %}
 
 <div class="container" style="margin-top: 100px;">
   <h1>{{ msg }}</h1>
-    <div class="row justify-content-center">
-        <form method="POST" action="" enctype="multipart/form-data">
+   
+
+
+      <div class="registration-form" ">
+        <form method="POST"  enctype="multipart/form-data>
           {% csrf_token %}
-
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="name">Adyňyz</label>
-                {{ form_user.first_name }}
-              </div>
-
-              <div class="form-group col-md-6">
-                <label for="surname">Familiýaňyz</label>
-                {{ form_user.last_name }}
-              </div>
+            <div class="form-group">
+              <label for="{{ form_user.first_name.id_for_label }}">Adyňyz</label>
+              {{ form_user.first_name }}
             </div>
-          
-              <div class="form-group col-md-6">
-                <label for="status">Status</label>
-                {{ form_profile.status }}
-              </div>
-
-              <div class="form-group col-md-6">
-                <label for="category">Category</label>
-                {{ form_profile.category }}
-              </div>
-
-              <div class="form-group col-md-6">
-                <label for="mobile">Telefon</label>
-                {{ form_profile.mobile }}
-              </div>
-
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="from">Nireden?</label>
+            <div class="form-group">
+              <label for="{{ form_user.last_name.id_for_label }}">Familiýaňyz</label>
+              {{ form_user.last_name }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form_profile.mobile.id_for_label }}">Telefon</label>
+              {{ form_profile.mobile }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form_profile.status.id_for_label }}">Status</label>
+              {{ form_profile.status }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form_profile.category.id_for_label }}">Category</label>
+              {{ form_profile.category }}
+            </div>
+            <div class="form-group">
+              <label for="{{ form_profile.nireden.id_for_label }}">Nireden?</label>
                 {{ form_profile.nireden }}
-              </div>
-
-              <div class="form-group col-md-6">
-                <label for="to">Nirä?</label>
+            </div>
+            <div class="form-group">
+              <label for="{{ form_profile.nira.id_for_label }}">Nirä?</label>
                 {{ form_profile.nira }}
-              </div>
-
             </div>
 
-              <div class="form-row justify-content-center">
-                  <div> 
-                      <img src="{{ request.user.taxiprofile.user_photo.url }}" class="img-thumbnail" alt="Profile-Image" >
-                      <h6 class="f-w-600">Sürüjiniň suraty</h6>
-                      {{ form_profile.user_photo }}
-                  </div>
+          <div class="d-flex justify-content-around">
+            <div class="form-icon">
+              <div  class="form-icon" 
+                    id="id_div_user_photo" 
+                    style="background-image: url('{{ request.user.taxiprofile.user_photo.url }}');
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    background-color: #5891ff; ">
               </div>
+              <input type="file" name="user_photo" accept="image/*"  id="id_user_photo" style="display: none;">
+            </div>  
 
-              <div class="form-row justify-content-center">
-                <div>
-                  <img src="{{ request.user.taxiprofile.car_photo.url }}" class="img-thumbnail" alt="Car-Image" >
-                    <h6 class="f-w-600">Ulagyň suraty</h6>
-                    {{ form_profile.car_photo }}
+              <div class="form-icon">
+                <div  class="form-icon" 
+                      id="id_div_car_photo" 
+                      style="background-image: url('{{ request.user.taxiprofile.car_photo.url }}');
+                      background-repeat: no-repeat;
+                      background-size: cover;
+                      background-color: #cccccc; ">
                 </div>
+                <input type="file" name="car_photo" accept="image/*"  id="id_car_photo" style="display: none;">
               </div>
+          </div>
 
-              <div class="form-row justify-content-center">
-                <button class="btn btn-primary btn-lg" type="submit">Ýatda Sakla</button>
-              </div>
 
+            <div class="form-group">
+                <button type="submit" class="btn btn-block create-account">Ýatda Sakla </button>
+            </div>
         </form>
-      </div>
+        
     </div>
-</div>
 
+
+
+    </div>
+
+    
 
 
 {% endblock %}
 {% block javascript %}
  <script>
+   // Handle dropdown selection of Saher ici and Etrap obalary
    $("select#id_category").change(function(){
      console.log("category changed to" + $(this).val())
      var category_id = $(this).val()
@@ -85,32 +193,84 @@
      console.log(category_id)
      if (category_id == 1) {
        console.log("inside if 1");
-       $("label[for='from']").html("Haýsy Şäherde?")
-       $("label[for='to']").html("Niresinde?")
+       $("label[for='id_nireden']").html("Haýsy Şäherde?")
+       $("label[for='id_nira']").html("Niresinde?")
        $("select#id_nira option[value='1']").show();
       $("select#id_nira option[value='2']").show();
-      $("select#id_nira option[value='" + oldSelectedOptionValue + "']").prop("selected","");
+      $("select#id_nira").find("option:selected").remove();
        $("select#id_nira option[value='" + category_id + "']").prop("selected","selected");
       $("select#id_nira").prop("disabled", true);
      } else if (category_id == 2){
       console.log("inside if 2");
-      $("label[for='from']").html("Haýsy Şäherde?")
-      $("label[for='to']").html("Niresinde?")
+      $("label[for='id_nireden']").html("Haýsy Şäherde?")
+      $("label[for='id_nira']").html("Niresinde?")
       $("select#id_nira option[value='1']").show();
       $("select#id_nira option[value='2']").show();
-      $("select#id_nira option[value='" + oldSelectedOptionValue + "']").prop("selected","");
+      $("select#id_nira").find("option:selected").remove();
       $("select#id_nira option[value='" + category_id + "']").prop("selected","selected");
       $("select#id_nira").prop("disabled", true);
      } else {
       console.log("inside else");
-      $("label[for='from']").html("Nireden?")
-      $("label[for='to']").html("Nirä?")
+      $("label[for='id_nireden']").html("Nireden?")
+      $("label[for='id_nira']").html("Nirä?")
       $("select#id_nira option[value='1']").hide();
       $("select#id_nira option[value='2']").hide();
       $("select#id_nira").prop("disabled", false);
+      $("select#id_nira").find("option:selected").remove();
       $("select#id_nira option[value='']").prop("selected","selected");
      }
 
    })
+
+   // JS code for registraion form
+   $(document).ready(function(){
+      $('#birth-date').mask('00/00/0000');
+      $('#id_mobile').mask('00 000000');
+    })
+
+    //Handle image upload widget
+    //  <input type="file" name="car_photo" accept="image/*" id="id_car_photo">
+    // <div  class="form-icon" 
+    //                 id="id_div_car_photo" 
+    //                 style="background-image: url('http://lorempixel.com/100/100');
+    //                 background-repeat: no-repeat;
+    //                 background-size: cover;">
+    // Handle user photo
+    $("#id_div_user_photo").click(function(e) {
+        $("#id_user_photo").click();
+    });
+
+    function fasterPreviewUserPhoto( uploader ) {
+        if ( uploader.files && uploader.files[0] ){
+          console.log("I am inside preview")
+              $("#id_div_user_photo").css("background-image", 
+                "url('" + window.URL.createObjectURL(uploader.files[0]) + "')");
+        }
+    }
+
+    $("#id_user_photo").change(function(){
+      console.log("I am inside change event")
+      fasterPreviewUserPhoto( this );
+    });
+
+    //Handle car photo
+    $("#id_div_car_photo").click(function(e) {
+        $("#id_car_photo").click();
+    });
+
+    function fasterPreviewCarPhoto( uploader ) {
+        if ( uploader.files && uploader.files[0] ){
+          console.log("I am inside preview")
+              $("#id_div_car_photo").css("background-image", 
+                "url('" + window.URL.createObjectURL(uploader.files[0]) + "')");
+        }
+    }
+
+    $("#id_car_photo").change(function(){
+      console.log("I am inside change event")
+      fasterPreviewCarPhoto( this );
+    });
+
+    
 </script>
 {% endblock %}

@@ -46,7 +46,7 @@
               <div id="test" class="card-header m-0 p-1 text-center">{{ user.first_name }}</div>
               <ul class="list-group list-group-flush">
                   <li class="list-group-item m-0 p-0 text-center">{{ user.taxicategory.name }}</li>
-                  <li class="list-group-item m-0 p-0 text-center">Asgabat - Sarahs</li>
+                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxiprofile.nireden.name }} - {{ user.taxiprofile.nira.name }}</li>
                   <li class="list-group-item m-0 p-0 text-center"  id="status">{{ user.taxistatus.status }}</li>
                   <li class="list-group-item m-0 p-0 text-center">{{ user.taxiprofile.mobile }}</li>
               </ul>
