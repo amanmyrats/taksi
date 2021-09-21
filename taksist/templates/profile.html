@@ -1,23 +1,99 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head_extra %}
+<style>
+  
+body{
+    background:#f5f5f5;
+    margin-top:20px;
+}
+
+/*  -----  Widget - Social Profile  -----  */
+.xp-social-profile-avatar img {
+  border: 5px solid #fff;
+  margin-top: -10px;
+}
+.xp-social-profile-avatar .xp-social-profile-live {
+  position: absolute;
+  bottom: 15px;
+  margin: 0px -20px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background-color: #2bcd72;
+}
+.suratyndasy{
+display: flex;
+justify-content: center;
+
+}
+.suratlar{
+  width: auto;
+
+
+}
+.text-black {
+    color: #555555 !important;
+}
+.mb-1, .my-1 {
+    margin-bottom: .25rem!important;
+}
+.mt-1, .my-1 {
+    margin-top: .25rem!important;
+}
+.h5, h5 {
+    font-size: 1.25rem;
+}
+
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.card {
+    /* border: none; */
+    box-shadow: 10px 10px 5px 1px rgba(0, 0, 0, 0.041);
+}
+.m-b-30 {
+    margin-bottom: 30px;
+}
+.title {
+  margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+    padding: 4px 8px 10px;
+}
+</style>
+{% endblock %}
 {% block profile %}
 
 <!-- Is yagdayy -->
 <div class="container " style="margin-top: 100px;">
-    <div class="row justify-content-center bg-white"">
-        <div  style="display:inline-block">
-          <label>Işe çykjak.</label>
-          <label class="switch">
-              <input id='isde' name="work" type="radio" value="Işde">
+    <div class="row justify-content-center bg-white ">
+        <div class=" col-xs-12 col-md-4 " style="display:inline-block ">
+
+
+            <label>Işe çykjak.</label>
+            <label class="switch">
+                <input id='isde' name="work" type="radio" value="Işde">
+     
+                <span class="slider round"></span>
+            </label>
+            <label>Dynç aljak.</label>
+            <label class="switch">
+              <input id = "dyncda" name="work"  type="radio"  value="Dynçda">
    
               <span class="slider round"></span>
           </label>
-          <label>Dynç aljak.</label>
-          <label class="switch">
-            <input id = "dyncda" name="work"  type="radio"  value="Dynçda">
  
-            <span class="slider round"></span>
-        </label>
       </div>
     </div>
 
@@ -26,38 +102,112 @@
 <!-- Maglumatlary sazla -->
 <div class="container">
     <div class="row justify-content-center">
-    <a href="{% url 'settings' %}" class="btn btn-lg btn-primary">Maglumatlary sazla</a>
+    <a href="{% url 'settings' %}" class="btn btn-lg btn-primary col-xs-12 col-md-4">Maglumatlary sazla</a>
 </div>
 </div>
 <!-- Profile preview -->
-<div class="container">
-    <div class="row justify-content-center">
-      <div class=" col-lg-4 col-sm-12 d-flex justify-content-center form-group">
-        <div class="card p-3">
-          <div class="d-flex align-items-center">
-            <div  class="row"> 
-              <img src="{{ request.user.taxiprofile.user_photo.url }}" class="img-thumbnail"> 
-              
-              <img src="{{ request.user.taxiprofile.car_photo.url }}" class="img-thumbnail">
-            </div>
 
-              <div class="">
   
-              <div id="test" class="card-header m-0 p-1 text-center">{{ user.first_name }}</div>
-              <ul class="list-group list-group-flush">
-                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxicategory.name }}</li>
-                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxiprofile.nireden.name }} - {{ user.taxiprofile.nira.name }}</li>
-                  <li class="list-group-item m-0 p-0 text-center"  id="status">{{ user.taxistatus.status }}</li>
-                  <li class="list-group-item m-0 p-0 text-center">{{ user.taxiprofile.mobile }}</li>
-              </ul>
-              <div class="button mt-2 d-flex flex-row align-items-center"> <button class="btn btn-sm btn-primary w-100 ml-2">Jaň Et</button> </div>
+  
+  
+
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.0.45/css/materialdesignicons.min.css" integrity="sha256-nRyVCcVDSlWN9d68r9M+rKBLE4k9Cp1j3XSY/umjvvU=" crossorigin="anonymous" /> -->
+  <div class="container mt-3">
+      <div class="row justify-content-center">
+          <div class="col-md-4 col-xs-12">
+              <div class="card m-b-30 border-primary rounded">
+                  <!-- <div class="card-header bg-white">
+                      <h5 class="card-title text-black mb-0">Social Profile</h5>
+                  </div> -->
+                  <div class="card-body">
+                      <div class="xp-social-profile">
+                          <div class="xp-social-profile-img">
+                              <div class="row justify-content-center">
+                                  <div class="col-5 px-1 py-1 mx-1 bg-info">
+                                    
+
+                                      <img src="{{ request.user.taxiprofile.user_photo.url }}" class="rounded img-fluid suratlar" alt="img">
+                                    
+                                  </div>
+                                  <div class="col-5 px-1  py-1 mx-1 bg-info suratyndasy">
+                                    <div class="row align-items-center">
+
+                                        <img src="{{ request.user.taxiprofile.car_photo.url }}" class="rounded img-fluid suratlar" alt="img">
+           
+                                    </div>
+                                  </div>
+                                    <!-- <div class="col-4 px-1">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded img-fluid" alt="img">
+                                    </div> -->
+                              </div>
+                          </div>
+                          <!-- <div class="xp-social-profile-top">
+                              <div class="row">
+                                  <div class="col-3">
+                                      <div class="xp-social-profile-star py-3">
+                                          <i class="mdi mdi-star font-24"></i>
+                                      </div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="xp-social-profile-avatar text-center">
+                                          <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="user-profile" class="rounded-circle img-fluid">
+                                          <span class="xp-social-profile-live"></span>
+                                      </div>
+                                  </div>
+                                  <div class="col-3">
+                                      <div class="xp-social-profile-menu text-right py-3">
+                                          <i class="mdi mdi-dots-horizontal font-24"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+                          <div class="xp-social-profile-middle text-center">
+                              <div class="row">
+
+                                  <div class="col-12">
+
+                                      <ul class="list-group list-group-flush">
+                                        <li class="list-group-item my-1 p-0 text-center h2 text-black">{{ user.first_name }}</li>
+                                        <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ user.taxiprofile.nireden.name }} - {{ user.taxiprofile.nira.name }}</li>
+                                        <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ user.taxiprofile.mobile }}</li>
+                                    </ul>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- <div class="xp-social-profile-bottom text-center">
+                              <div class="row">
+                                  <div class="col-4">
+                                      <div class="xp-social-profile-media pt-3">
+                                          <h5 class="text-black my-1">45</h5>
+                                          <p class="mb-0 text-muted">Posts</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-4">
+                                      <div class="xp-social-profile-followers pt-3">
+                                          <h5 class="text-black my-1">278k</h5>
+                                          <p class="mb-0 text-muted">Fans</p>
+                                      </div>
+                                  </div>
+                                  <div class="col-4">
+                                      <div class="xp-social-profile-following pt-3">
+                                          <h5 class="text-black my-1">552</h5>
+                                          <p class="mb-0 text-muted">Likes</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+                      </div>
+                  </div>
+              </div>
           </div>
+          
+        
       </div>
-  </div>
-  </div>
+  <!-- </div> -->
   
-  </div>
-  </div>
+  
+  
+</div>
 
   {% block javascript %}
   <script src="{% static 'js/jquery.min.js' %}"></script>

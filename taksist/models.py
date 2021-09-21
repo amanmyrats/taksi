@@ -37,8 +37,8 @@ class TaxiProfile(models.Model):
     nireden = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nireden', blank=True)
     nira = models.ForeignKey(City, on_delete=models.SET_NULL, null = True, related_name='nira', blank=True)
     
-    car_photo=ResizedImageField(size=[200, 200], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png', force_format='PNG')
-    user_photo=ResizedImageField(size=[200, 200], quality=75,upload_to='user_photos/', blank=True, default='user_photo/default_taksist.png', force_format='PNG')
+    user_photo=ResizedImageField(size=[200, 200], quality=75,upload_to='user_photos/', blank=True, default='user_photo/default_taksist.png', force_format='PNG', null=True)
+    car_photo=ResizedImageField(size=[200, 200], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png', force_format='PNG', null=True)
 
     objects = models.Manager()
 

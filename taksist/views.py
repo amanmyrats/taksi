@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
@@ -73,91 +75,109 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-@csrf_exempt
+# @csrf_exempt
 def settings_view(request, *args, **kwargs):
     print('settings started working')
     if request.user.is_authenticated:
         print('user is authenticated')
         if request.method=='POST':
-            print('method is POST')
+            # print('method is POST')
      
-            copyPOST = request.POST.copy()
-            print('nireden kontrol',copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0)
-            print('nira kontrol',copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0)
+            # copyPOST = request.POST.copy()
+            # print('nireden kontrol',copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0)
+            # print('nira kontrol',copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0)
             # try:
-            nireden = City.objects.filter(pk=copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0).first()
-            nira = City.objects.filter(pk=copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0).first()
-            category = Category.objects.filter(pk=copyPOST.get('category') if not copyPOST.get('category')=='' else 0).first()
-            status = Status.objects.filter(pk=copyPOST.get('status') if not copyPOST.get('status')=='' else 0).first()
-            # copyPOST['nireden'] = nireden
-            # copyPOST['nira'] = nira
-            copyPOST.pop('nireden')
-            copyPOST.pop('nira')
-            copyPOST.pop('category')
-            copyPOST.pop('status')
-            print('found nireden nira:', type(nireden), type(nira))
+            #     nireden = City.objects.filter(pk=copyPOST.get('nireden') if not copyPOST.get('nireden')=='' else 0).first()
+            #     nira = City.objects.filter(pk=copyPOST.get('nira') if not copyPOST.get('nira')=='' else 0).first()
+            #     category = Category.objects.filter(pk=copyPOST.get('category') if not copyPOST.get('category')=='' else 0).first()
+            #     status = Status.objects.filter(pk=copyPOST.get('status') if not copyPOST.get('status')=='' else 0).first()
+            #     # copyPOST['nireden'] = nireden
+            #     # copyPOST['nira'] = nira
+            #     copyPOST.pop('nireden')
+            #     copyPOST.pop('nira')
+            #     copyPOST.pop('category')
+            #     copyPOST.pop('status')
+            #     print('found nireden nira:', type(nireden), type(nira))
             # except:
             #     print('no status or category or nireden or nira was selected')
-            form_profile=TaxiProfileModelForm(copyPOST, request.FILES)
-            form_user=UserModelForm(copyPOST)
+            form_profile=TaxiProfileModelForm(request.POST, request.FILES, instance = request.user.taxiprofile)
+            form_user=UserModelForm(request.POST, instance=request.user)
 
             print('before checkin is_valid')
             if form_profile.is_valid()  and form_user.is_valid(): # and form_category.is_valid()
                 print('they are valid')
-                user=request.user
+                # form_user.instance.rel_user = request.user
+                # form_profile.instance.rel_user = request.user
+                form_profile.save()
+                form_user.save()
+                context={'form_profile': form_profile , 
+                    'form_user': form_user}
+                print('after save')
+                
+                # user=request.user
               
-                print('before profile')
-                # Here check TaxiProfile model, if exists update, if not create new taxe profile
-                try:
-                    check_profile=TaxiProfile.objects.get(user_id=user.id)
-                    # check_profile.user_id=user
-                    print('photo none or not: ', form_profile.cleaned_data['user_photo'])
+                # print('before profile')
+                # # Here check TaxiProfile model, if exists update, if not create new taxe profile
+                # try:
+                #     check_profile=TaxiProfile.objects.get(user_id=user.id)
+                #     # check_profile.user_id=user
+                #     print(datetime.datetime.now())
+                #     print('user photo none or not: ', form_profile.cleaned_data['user_photo'])
+                #     print('car photo none or not: ', form_profile.cleaned_data['car_photo'])
 
-                    if form_profile.cleaned_data['user_photo']!='user_photo/default_taksist.png':
-                        print('inside form_profile comparing with default taxi')
-                        check_profile.user_photo=form_profile.cleaned_data['user_photo']
-                    if form_profile.cleaned_data['car_photo']!='car_photo/default_car.png':
-                        check_profile.car_photo=form_profile.cleaned_data['car_photo']
-                    check_profile.mobile=form_profile.cleaned_data['mobile']
-                    print('before finding nireden nira')
-                    print('these will be assigned: ',nireden, nira)
-                    check_profile.nireden = nireden
-                    check_profile.nira = nira
-                    print('assigned nireden nira, and moving on to assign category and status')
-                    print('these will be assigned: ',category, status)
-                    check_profile.category = category
-                    print('category was assigned, and moving on to status')
-                    check_profile.status = status
-                    print('assigned nireden nira to check profile')
+                #     if form_profile.cleaned_data['user_photo']!='user_photo/default_taksist.png':
+                #         print('inside form_profile comparing with default user photo')
+                #         check_profile.user_photo=form_profile.cleaned_data['user_photo']
+                #     if form_profile.cleaned_data['car_photo']!='car_photo/default_car.png':
+                #         print('inside form_profile comparing with default car photo')
+                #         check_profile.car_photo=form_profile.cleaned_data['car_photo']
+                #     check_profile.mobile=form_profile.cleaned_data['mobile']
+                #     print('before finding nireden nira')
+                #     print('these will be assigned: ',nireden, nira)
+                #     check_profile.nireden = nireden
+                #     check_profile.nira = nira
+                #     print('assigned nireden nira, and moving on to assign category and status')
+                #     print('these will be assigned: ',category, status)
+                #     check_profile.category = category
+                #     print('category was assigned, and moving on to status')
+                #     check_profile.status = status
+                #     print('assigned nireden nira to check profile')
+                #     print('user_photo to be assigned',request.FILES['user_photo'])
+                #     print('user_photo to be assigned',request.POST.get('user_photo'))
+                #     print('user_photo to be assigned',copyPOST.get('user_photo'))
+                #     if request.FILES.get('user_photo') is None:
+                #         print('user photo is none')
+                #     else:
+                #         check_profile.user_photo = request.FILES.get('user_photo')
 
-                    check_profile.save()
-                    print('saved taxiprofile')
-                except:
-                    print('exception happened when updating taxiprofile model')
-                    profile=form_profile.save(False)
-                    profile.user_id=user
-                    profile.save()
-                    print('saved profile with exception')
+                #     check_profile.save()
+                #     print('saved taxiprofile')
+                # except:
+                #     print('exception happened when updating taxiprofile model')
+                #     profile=form_profile.save(False)
+                #     profile.user_id=user
+                #     profile.save()
+                #     print('saved profile with exception')
       
-                # Here update the User model data
-                try:
-                    current_user=User.objects.get(pk=request.user.id)
-                    print('user first name before: ', current_user.first_name)
+                # # Here update the User model data
+                # try:
+                #     current_user=User.objects.get(pk=request.user.id)
+                #     print('user first name before: ', current_user.first_name)
                     
-                    current_user.first_name=form_user.cleaned_data['first_name']
-                    current_user.last_name=form_user.cleaned_data['last_name']
-                    current_user.save()
-                    print('user first name after: ', current_user.first_name)
-                    print(form_user.cleaned_data['first_name'])
-                    print('current user: ', current_user)
-                except:
-                    print('Exception occured when editing user model.')
+                #     current_user.first_name=form_user.cleaned_data['first_name']
+                #     current_user.last_name=form_user.cleaned_data['last_name']
+                #     current_user.save()
+                #     print('user first name after: ', current_user.first_name)
+                #     print(form_user.cleaned_data['first_name'])
+                #     print('current user: ', current_user)
+                # except:
+                #     print('Exception occured when editing user model.')
 
-                msg='Successfully saved.'
-                context={'msg':msg}
-                print('return render')
-                # return render(request, 'profile.html', context)
-                return redirect('profile')
+                # msg='Successfully saved.'
+                # context={'msg':msg}
+                # print('return render')
+                # # return render(request, 'profile.html', context)
+                # return redirect('profile')
             else:
                 print('form is not valied')
                 msg='Forms are not valid'

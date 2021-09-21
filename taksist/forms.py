@@ -27,6 +27,10 @@ class TaxiProfileModelForm(forms.ModelForm):
         self.fields['nira'].widget.attrs={
             'class': 'form-control item'
         }
+        # self.fields['user_photo'].widget.attrs={
+        #     'style': 'display:none;'}
+        # self.fields['car_photo'].widget.attrs={
+        #     'display': 'none'}
 
 
 class UserModelForm(forms.ModelForm):
