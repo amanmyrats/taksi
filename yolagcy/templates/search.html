@@ -27,11 +27,13 @@
   .suratyndasy {
     display: flex;
     justify-content: center;
-
+    width: 190;
+    height: 160px;
+    overflow: hidden;
   }
 
   .suratlar {
-    width: auto;
+    
 
 
   }
@@ -132,36 +134,39 @@
 <section>
   <div class="container mt-3">
     <div class="row justify-content-center">
-  {% for taxi in taxi_drivers %}
-  
-  
-            <div class="col-md-4 col-xs-12">
-              <div class="card m-b-30 border-primary rounded">
-                <div class="card-body">
-                  <div class="xp-social-profile">
-                    <div class="xp-social-profile-img">
-                      <div class="row justify-content-center">
-                        <div class="col-5 px-1 py-1 mx-1 bg-info">
-                          <img src="{{ taxi.user_photo_url }}" class="rounded img-fluid suratlar" alt="img">
-                        </div>
-                        <div class="col-5 px-1  py-1 mx-1 bg-info suratyndasy">
-                          <div class="row align-items-center">
-                            <img src="{{ taxi.car_photo_url }}" class="rounded img-fluid suratlar"
-                            alt="img">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="xp-social-profile-middle text-center">
-                      <div class="row">
-                        <div class="col-12">
-                          <ul class="list-group list-group-flush">
-                            <li class="list-group-item my-1 p-0 text-center h2 text-black">{{ taxi.first_name }} {{ taxi.last_name }}</li>
-                      <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ taxi.nireden }} - {{ taxi.nira }}</li>
-                        <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ taxi.mobile }}</li>
-                      </ul>
+      {% for taxi in taxi_drivers %}
+
+
+      <div class="col-md-4 col-xs-12">
+        <div class="card m-b-30 border-primary rounded">
+          <div class="card-body">
+            <div class="xp-social-profile">
+              <div class="xp-social-profile-img">
+                <div class="row justify-content-center">
+                  <div class="col-5 px-1 py-1 mx-1 bg-info suratyndasy">
+                    <div class="row align-items-center">
+                      <img src="{{ taxi.user_photo_url }}" class="rounded img-fluid suratlar" alt="img">
                     </div>
                   </div>
+                  <div class="col-5 px-1  py-1 mx-1 bg-info suratyndasy">
+                    <div class="row align-items-center">
+                      <img src="{{ taxi.car_photo_url }}" class="rounded img-fluid suratlar" alt="img">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="xp-social-profile-middle text-center">
+                <div class="row">
+                  <div class="col-12">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item my-1 p-0 text-center h4 text-black">{{ taxi.first_name }} 
+                        {{taxi.last_name }}</li>
+                      <li class="list-group-item m-0 p-0 text-center h4 text-muted">{{ taxi.nireden }} - {{ taxi.nira }}
+                      </li>
+                      <li class="list-group-item m-0 p-0 text-center h4 text-muted">{{ taxi.mobile }}</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

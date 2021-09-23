@@ -226,13 +226,17 @@ def awtomenzil_view(request):
 
 def statuschange_view(request):
     pass
-    # if request.is_ajax() and request.method=='GET':
-    #     print("inside statuschange_view")
-    #     new_status=request.GET.get('status', None)
-    #     user_status=TaxiStatus.objects.get(pk=request.user.id)
-    #     user_status.status=new_status
-    #     user_status.save()
-    #     return JsonResponse({"new_status":new_status}, status = 200)
+    if request.is_ajax() and request.method=='GET':
+        print("inside statuschange_view")
+        new_status=request.GET.get('status', None)
+        print('new status', new_status)
+        status_object = Status.objects.get(name = new_status)
+
+        user = TaxiProfile.objects.get(user_id = request.user)
+        user.status = status_object
+        user.save()
+
+        return JsonResponse({"new_status":new_status}, status = 200)
 
 def test_view(request):
     return render(request, 'test.html', {'msg':'test'})

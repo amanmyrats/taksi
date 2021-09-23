@@ -33,6 +33,19 @@ justify-content: center;
 
 
 }
+.suratyndasy {
+    display: flex;
+    justify-content: center;
+    width: 190;
+    height: 160px;
+    overflow: hidden;
+  }
+
+  .suratlar {
+    
+
+
+  }
 .text-black {
     color: #555555 !important;
 }
@@ -123,10 +136,12 @@ justify-content: center;
                       <div class="xp-social-profile">
                           <div class="xp-social-profile-img">
                               <div class="row justify-content-center">
-                                  <div class="col-5 px-1 py-1 mx-1 bg-info">
-                                    
+                                  <div class="col-5 px-1 py-1 mx-1 bg-info suratyndasy">
+                                    <div class="row align-items-center">
 
-                                      <img src="{{ request.user.taxiprofile.user_photo.url }}" class="rounded img-fluid suratlar" alt="img">
+                                        
+                                        <img src="{{ request.user.taxiprofile.user_photo.url }}" class="rounded img-fluid suratlar" alt="img">
+                                    </div>
                                     
                                   </div>
                                   <div class="col-5 px-1  py-1 mx-1 bg-info suratyndasy">
@@ -167,9 +182,9 @@ justify-content: center;
                                   <div class="col-12">
 
                                       <ul class="list-group list-group-flush">
-                                        <li class="list-group-item my-1 p-0 text-center h2 text-black">{{ user.first_name }}</li>
-                                        <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ user.taxiprofile.nireden.name }} - {{ user.taxiprofile.nira.name }}</li>
-                                        <li class="list-group-item m-0 p-0 text-center h3 text-muted">{{ user.taxiprofile.mobile }}</li>
+                                        <li class="list-group-item my-1 p-0 text-center h4 text-black">{{ user.first_name }}</li>
+                                        <li class="list-group-item m-0 p-0 text-center h4 text-muted">{{ user.taxiprofile.nireden.name }} - {{ user.taxiprofile.nira.name }}</li>
+                                        <li class="list-group-item m-0 p-0 text-center h4 text-muted">{{ user.taxiprofile.mobile }}</li>
                                     </ul>
                                   </div>
                               </div>
@@ -215,8 +230,8 @@ justify-content: center;
   <!-- <script>
     $(document).ready(function(){
       console.log( "ready!" );
-      $("#test").click(function(){
-        console.log( "clicked" );
+      $("input[type=radio][name=work]").change(function(){
+        console.log( "radio changed" );
       });
     });
     // $("#test").click(function () {
