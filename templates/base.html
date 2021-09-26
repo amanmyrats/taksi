@@ -47,13 +47,13 @@
 
             {% if request.user.is_authenticated %}
             <li>
-               Salam {{ request.user}}
-               <a href="{% url 'logout' %}">  | Çyk</a> 
+               Salam {{ request.user.first_name}} <span> | </span>
+               <a class="btn btn-info p-0 px-1" href="{% url 'logout' %}">Çykmak üçin bas</a> 
             </li>
             {% else %}
             <li>
                Salam, Sistema 
-               <a class="btn btn-secondary" href="{% url 'login' %}">Giriň</a> 
+               <a class="btn btn-info p-0 px-1" href="{% url 'login' %}">Giriň</a> 
             </li>
             {% endif %}
          </ul>
@@ -61,16 +61,16 @@
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
             <span class="navbar-toggler-icon"></span>
          </button>
-         <div class="collapse navbar-collapse ml-5" id="navmenu">
+         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto">
                <li class="nav-item ml-1">
-                  <a class="btn btn-secondary" href="{% url 'search' %}saherara" class="nav-link">Şäher Ara</a>
+                  <a class="btn btn-secondary" href="{% url 'search' %}?category=3" class="nav-link">Şäher Ara</a>
                </li>
                <li class="nav-item ml-1">
-                  <a class="btn btn-secondary" href="{% url 'search' %}saherici" class="nav-link">Şäher Içi</a>
+                  <a class="btn btn-secondary" href="{% url 'search' %}?category=1" class="nav-link">Şäher Içi</a>
                </li>
                <li class="nav-item ml-1">
-                  <a class="btn btn-secondary" href="{% url 'search' %}etrapobalary" class="nav-link">Etrap Obalary</a>
+                  <a class="btn btn-secondary" href="{% url 'search' %}?category=2" class="nav-link">Etrap Obalary</a>
                </li>
 
             </ul>

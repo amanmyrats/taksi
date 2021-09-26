@@ -48,16 +48,37 @@ class TaxiListAPIView(generics.ListAPIView):
     search_fields = ['user_id__first_name', 'user_id__last_name', 'mobile', 'nireden__name', 'nira__name']
 
     def get_queryset(self):
-        nira = self.request.GET.get('category')
-        category = None
-        if nira == 'saherici':
-            category = Category.objects.get(id = 1)
-        elif nira == 'etrapobalary':
-            category = Category.objects.get(id = 2)
-        elif nira == 'saherara':
-            category = Category.objects.get(id = 3)
 
-        if category is not None:
-            return TaxiProfile.objects.filter(category=category)
-        else:
-            return TaxiProfile.objects.all()
+        category = self.request.GET.get('category')
+        nireden = self.request.GET.get('nireden')
+        nira = self.request.GET.get('nira')
+        print('category in TaxiListAPIView:', category)
+        print('nireden in TaxiListAPIView:', nireden)
+        print('nira in TaxiListAPIView:', nira)
+        taxis = TaxiProfile.objects.all()
+        print('before filter:',taxis)
+        if category:
+            taxis = taxis.filter(category=category)
+            print('category filter:',taxis)
+        if nireden:
+            taxis = taxis.filter(nireden=nireden)
+            print('nireden filter:',taxis)
+        if nira:
+            taxis = taxis.filter(nira=nira)
+            print('nira filter:',taxis)
+
+        return taxis
+
+
+        # if category == 'saherici':
+        #     category = Category.objects.get(id = 1)
+        # elif category == 'etrapobalary':
+        #     category = Category.objects.get(id = 2)
+        # elif category == 'saherara':
+        #     category = Category.objects.get(id = 3)
+
+        # if category is not None:
+        #     # print('return of api:', TaxiProfile.objects.filter(category=category))
+        #     return TaxiProfile.objects.filter(category=category)
+        # else:
+        #     return TaxiProfile.objects.all()

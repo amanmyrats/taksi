@@ -1,47 +1,84 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
 import requests
 import time
+from django.views.generic import ListView
+from django.core.paginator import Paginator
 
 from .filters import TaxiFilter
 from api.views import TaxiListAPIView
-from taksist.models import TaxiProfile
+from taksist.models import TaxiProfile, City, Category
+
+class TaxiListView(ListView):
+    model = TaxiProfile
+    template_name = 'taxis.html'
+    # queryset = TaxiProfile.objects.all()
+    paginate_by = 3
+    context_object_name = 'taxi_drivers'
+
+
 
 def search_view(request, **kwargs):
     print('inside search view')
+    
+    category = request.GET.get('category')
+    nireden = request.GET.get('nireden')
+    nira = request.GET.get('nira')
     search = request.GET.get('search')
-    nira = kwargs.get('nira')
-    print('user is searching:', search)
-    print('category is:', nira)
+    print('user is searching category:', category)
+    print('user is searching nireden:', nireden)
+    print('user is searching nira:', nira)
+    print('user is searching a word:', search)
+    
+    
     
 
     if request.method == 'GET':
-        if search is not None:
-            data = requests.get('http://127.0.0.1:8000/api/hemmesi/', params=request.GET)
-            return render(request, 'search.html', {'taxi_drivers':data.json()})
-        else:
-            if kwargs.get('nira')=='saherici':
-                print('i will request  saher ici api in search view')
-                data = requests.get('http://127.0.0.1:8000/api/saherici/', params=request.GET)
-                print('sucessfully got saher ici in search view')
-            elif kwargs.get('nira')=='etrapobalary':
-                print('i will request  etrapobalary api in search view')
-                data = requests.get('http://127.0.0.1:8000/api/etrapobalary/', params=request.GET)
-                print('sucessfully got etrapobalary in search view')
-            elif kwargs.get('nira')=='saherara':
-                print('i will request saherara api')
-                data = requests.get('http://127.0.0.1:8000/api/saherara/', params=request.GET)
-                print(data)
-                print('sucessfully got saherara ara in search view')
-            else:
-                print('will return all taxi')
-                data = requests.get('http://127.0.0.1:8000/api/hemmesi/', params=request.GET)
-                print('sucessfully got all taxi data')
+        data = requests.get('http://127.0.0.1:8000/api/hemmesi/', params=request.GET)
+        # if search is not None:
+        #     data = requests.get('http://127.0.0.1:8000/api/hemmesi/', params=request.GET)
+        # else:
+        #     if kwargs.get('category')=='saherici':
+        #         data = requests.get('http://127.0.0.1:8000/api/saherici/', params=request.GET)
+        #     elif kwargs.get('category')=='etrapobalary':
+        #         data = requests.get('http://127.0.0.1:8000/api/etrapobalary/', params=request.GET)
+        #     elif kwargs.get('category')=='saherara':
+        #         data = requests.get('http://127.0.0.1:8000/api/saherara/', params=request.GET)
+        #     else:
+        #         data = requests.get('http://127.0.0.1:8000/api/hemmesi/', params=request.GET)
 
-    # print(data.json())
-    print('returning render in search view')
-    print('category nira is:', nira)
-    return render(request, 'search.html', {'taxi_drivers':data.json(), 'category':nira})
+    drivers = data.json()
+    paginator = Paginator(drivers, 6) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    categories = Category.objects.all()
+    nireden_cities = City.objects.all().exclude(pk=1).exclude(pk=2)
+    nira_cities = City.objects.all()
+    try:
+        current_category = get_object_or_404(Category, pk=category)
+    except:
+        current_category = ''
+    
+    try:
+        current_nireden = get_object_or_404(City, pk=nireden)
+    except:
+        current_nireden = ''
+
+    try:
+        current_nira = get_object_or_404(City, pk=nira)
+    except:
+        current_nira = ''
+
+    context = { 'drivers': drivers, 
+                'page_obj': page_obj,
+                'categories' : categories,
+                'nireden_cities' : nireden_cities,
+                'nira_cities' : nira_cities,
+                'current_category':current_category,
+                'current_nireden':current_nireden,
+                'current_nira':current_nira}
+    return render(request, 'search.html', context)
 
 def taxi_search_view(request):
     taksistler = TaxiProfile.objects.all()

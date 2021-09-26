@@ -30,11 +30,6 @@
     width: 190;
     height: 160px;
     overflow: hidden;
-  }
-
-  .suratlar {
-    
-
 
   }
 
@@ -95,34 +90,60 @@
 <section style="padding-top: 100px;">
   <div class="container">
     <div class="row justify-content-center padding">
-      <div class="col-md-8 ftco-animate fadeInUp ftco-animated">
+      <div class="col-md-12 col-xs-12 ftco-animate fadeInUp ftco-animated">
         <form type="GET" action="" class="domain-form">
           <div class="form-group d-md-flex">
+            
+            <select class="custom-select mx-1 border border-info rounded" name="category" id="id-category">
 
-            <input type="text" name="category" id="categoryinput" value="{{category}}"
-              style="visibility: hidden; width: 1px;">
+              {% if current_category == "" %}
+              <option value="" selected>Hemmesi</option>
+              <option value="">Hemmesi</option>
+              {% else %}
+              <option value="{{ current_category.id }}" selected>{{ current_category.name }}</option>
+              <option value="" >Hemmesi</option>
+              {% endif %}
 
-            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-              <option selected>
-                {% if category == "saherara" %}
-                Şäher Ara
-                {% elif category == "saherici" %}
-                Şäher Içi
-                {% elif category == "etrapobalary" %}
-                Etrap Obalary
-                {% else %}
-                Hemmesi
-                {% endif %}
-              </option>
-              <option value="hemmesi">Hemmesi</option>
-              <option value="saherici">Şäher Içi</option>
-              <option value="etrapobalary">Etrap Obalary</option>
-              <option value="saherara">Şäher Ara</option>
+              {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.name }}</option>
+              {% endfor %}
+
             </select>
 
+            <select class="custom-select mx-1 border border-info rounded" name="nireden" id="id-nireden">
+
+              {% if current_nireden == "" %}
+              <option value="" selected>Hemmesi</option>
+              <option value="">Hemmesi</option>
+              {% else %}
+              <option value="{{ current_nireden.id }}" selected>{{ current_nireden.name }}</option>
+              <option value="">Hemmesi</option>
+              {% endif %}
+              {% for city in nireden_cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+              {% endfor %}
+
+
+            </select>
+            <select class="custom-select mx-1 border border-info rounded" name="nira" id="id-nira">
+              
+              {% if current_nira == "" %}
+              <option value="" selected>Hemmesi</option>
+              <option value="">Hemmesi</option>
+              {% else %}
+              <option value="{{ current_nira.id }}" selected>{{ current_nira.name }}</option>
+              <option value="">Hemmesi</option>
+              {% endif %}
+
+              {% for city in nira_cities %}
+                <option value="{{ city.id }}">{{ city.name }}</option>
+              {% endfor %}
+
+            </select>
+            
             <input id="search" name='search' type="text" class="form-control px-4"
-              placeholder="Gözlemeli taksistiň ýada şäheriň adyny ýazyň...">
-            <input type="submit" class="search-domain btn btn-primary px-5" value="Gözle">
+              placeholder="Gözlemeli taksistiň ýada şäheriň adyny ýazyň..." >
+            <input type="submit" id="id-gozle" class="search-domain btn btn-primary px-5" value="Gözle">
           </div>
         </form>
       </div>
@@ -134,7 +155,7 @@
 <section>
   <div class="container mt-3">
     <div class="row justify-content-center">
-      {% for taxi in taxi_drivers %}
+      {% for taxi in page_obj %}
 
 
       <div class="col-md-4 col-xs-12">
@@ -177,11 +198,72 @@
   </div>
 </section>
 
+<section >
+  <p>
+
+
+    <nav aria-label="Page navigation example">
+      <!-- <div class="row text-center"> -->
+
+        <ul class="pagination nav justify-content-center">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+              <span>Öňki</span>
+            </a>
+          </li>
+          {% else %}
+          <li class="page-item"><a class="page-link"  href="#">
+            <span>Öňki</span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item" >
+          <span class="page-link">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link"  href="?page={{ page_obj.next_page_number }}">
+            <span>Indiki</span>
+          </a>
+        </li>
+        
+        {% else %}
+        <li {% if not page_obj.has_next %} class="disabled"{% endif %} class="page-item">
+          <a class="page-link" ><span>Indiki</span></a>
+        </li>
+        {% endif %}
+      </ul>
+    <!-- </div> -->
+    </nav>
+    
+    </p>
+</section>
+
 <script>
-  $('select').on('change', function () {
-    console.log('inside jquery')
-    $('#categoryinput').attr('value', this.value)
+  $(document).ready(function(){
+    initialCategoryValue = $('select#id-category').children('option:selected').val()
+    if (initialCategoryValue ==1 || initialCategoryValue ==2){
+      $('select#id-nira option[value="' + initialCategoryValue +'"]').prop('selected', 'selected').change()
+      $('select#id-nira').prop('disabled', 'disabled')
+    }
+  })
+  $('select#id-category').on('change', function () {
+    var selectedValue = $(this).children('option:selected').val()
+    console.log('inside jquery, clicked selects value is:' + selectedValue)
+    if (selectedValue == 1 ||  selectedValue == 2){
+      $('select#id-nira option[value="' + selectedValue +'"]').prop('selected', 'selected').change()
+      $('select#id-nira').prop('disabled', 'disabled')
+    
+    } else{
+      $('select#id-nira').removeAttr('disabled')
+      $('select#id-nira option[value=""]').prop('selected', 'selected').change()
+    }
   });
+
+  $('#id-gozle').mousedown(function(){
+    $('select#id-nira').prop('disabled', false)
+  })
 </script>
 
 

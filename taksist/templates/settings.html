@@ -138,6 +138,14 @@
     </div>
     <div class="form-group">
       <label for="{{ form_profile.nira.id_for_label }}">Nirä?</label>
+
+      <!-- <select class="form-control item" name="nira" id="id_nira">
+        <option value="" selected>---------</option>
+        {% for city in cities %}
+          <option value="{{ city.id }}">{{ city.name }}</option>
+        {% endfor %}
+      </select> -->
+
       {{ form_profile.nira }}
     </div>
 
@@ -186,7 +194,7 @@
 
 
     <div class="form-group">
-      <button type="submit" class="btn btn-block create-account">Ýatda Sakla </button>
+      <button type="submit" class="btn btn-block create-account" id="id_yatda_sakle">Ýatda Sakla </button>
     </div>
     </form>
 
@@ -204,28 +212,22 @@
 <script>
   // Handle dropdown selection of Saher ici and Etrap obalary
   $("select#id_category").change(function () {
-    console.log("category changed to" + $(this).val())
     var category_id = $(this).val()
     var oldSelectedOptionValue = $(this).val()
-    console.log(category_id)
-    if (category_id == 1) {
-      console.log("inside if 1");
-      $("label[for='id_nireden']").html("Haýsy Şäherde?")
-      $("label[for='id_nira']").html("Niresinde?")
+    console.log("user selected category as " + category_id)
+
+    if (category_id == 1 || category_id == 2) {
+      console.log("inside if " + category_id);
+      $("label[for='id_nireden']").html("Haýsy Şäherde?");
+      $("label[for='id_nira']").html("Niresinde?");
       $("select#id_nira option[value='1']").show();
       $("select#id_nira option[value='2']").show();
-      $("select#id_nira").find("option:selected").remove();
-      $("select#id_nira option[value='" + category_id + "']").prop("selected", "selected");
+      // $("select#id_nira").find("option:selected").remove();
+
+      $("select#id_nira option[value='" + category_id + "']").prop("selected", 'selected').change();
+      // $('select#id-nira option[value="' + selectedValue +'"]').prop('selected', 'selected').change()
       $("select#id_nira").prop("disabled", true);
-    } else if (category_id == 2) {
-      console.log("inside if 2");
-      $("label[for='id_nireden']").html("Haýsy Şäherde?")
-      $("label[for='id_nira']").html("Niresinde?")
-      $("select#id_nira option[value='1']").show();
-      $("select#id_nira option[value='2']").show();
-      $("select#id_nira").find("option:selected").remove();
-      $("select#id_nira option[value='" + category_id + "']").prop("selected", "selected");
-      $("select#id_nira").prop("disabled", true);
+
     } else {
       console.log("inside else");
       $("label[for='id_nireden']").html("Nireden?")
@@ -233,8 +235,8 @@
       $("select#id_nira option[value='1']").hide();
       $("select#id_nira option[value='2']").hide();
       $("select#id_nira").prop("disabled", false);
-      $("select#id_nira").find("option:selected").remove();
-      $("select#id_nira option[value='']").prop("selected", "selected");
+      // $("select#id_nira").find("option:selected").remove();
+      $("select#id_nira option[value='']").prop("selected", "selected").change();
     }
 
   })
@@ -268,7 +270,7 @@
 
   //Handle car photo
   $("#car_photo_chage_button").click(function (e) {
-    $("#id_user_photo").click();
+    $("#id_car_photo").click();
   });
   $("#id_div_car_photo").click(function (e) {
     $("#id_car_photo").click();
@@ -287,6 +289,8 @@
     fasterPreviewCarPhoto(this);
   });
 
-
+  $('#id_yatda_sakle').mousedown(function(){
+    $('select#id_nira').prop('disabled', false)
+  })
 </script>
 {% endblock %}

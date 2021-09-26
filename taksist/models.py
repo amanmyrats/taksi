@@ -30,7 +30,7 @@ class Status(models.Model):
 
 
 class TaxiProfile(models.Model):    
-    user_id=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True )
+    user=models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True )
     mobile=models.CharField(max_length=13)
     category = models.ForeignKey(Category, on_delete = models.SET_NULL, null = True,  blank=True)
     status = models.ForeignKey(Status, on_delete = models.SET_NULL, null = True,  blank=True)
@@ -41,6 +41,9 @@ class TaxiProfile(models.Model):
     car_photo=ResizedImageField(size=[200, 200], quality=75,upload_to='car_photos/', blank=True, default='car_photo/default_car.png', force_format='PNG', null=True)
 
     objects = models.Manager()
+
+    def __str__(self) -> str:
+        return self.user.first_name
 
     # def save(self, *args, **kwargs):
     #     super(TaxiProfile, self).save(*args, **kwargs)
