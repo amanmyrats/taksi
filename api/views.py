@@ -74,10 +74,6 @@ class TaxiListAPIView(generics.ListAPIView):
             category = Category.objects.get(id = 3)
 
         if category is not None:
-            
-            print('category is', nira)
-            print('category name is', category.name)
-            return TaxiProfile.objects.filter(category=self.category)
+            return TaxiProfile.objects.filter(category=category)
         else:
-            print('category is none')
             return TaxiProfile.objects.all()
